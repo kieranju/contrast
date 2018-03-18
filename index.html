@@ -9,7 +9,6 @@
             font-size: 18px;
             background-color: #111111;
             overflow: hidden;
-            -webkit-overflow-scrolling: ;
         }
         .scroll {
             overflow: auto;
@@ -92,34 +91,36 @@
 </head>
 <body>
 
-    <div class="row top">
-        <div class="col left"><a class="primary navigation" href="#">music</a></div>
-        <div class="col right"><a class="primary navigation" href="#">shows</a></div>
+    <div class="scroll">
+        
+        <div class="row top">
+            <div class="col left"><a class="primary navigation" href="#">music</a></div>
+            <div class="col right"><a class="primary navigation" href="#">shows</a></div>
+        </div>
+
+        <div class="row center">
+            <div class="col center"><h1 class="logo title">ALLNB<span>R</span>G</h1></div>
+        </div>
+
+        <div class="row bottom">
+            <div class="col left"><a class="primary navigation" href="#">social</a></div>
+        </div>
+
+        <!-- Load Facebook SDK for JavaScript -->
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+        <!-- Your customer chat code -->
+        <div class="fb-customerchat" page_id="821466371221081" theme_color="#111111"></div>
+
     </div>
-
-    <div class="row center">
-        <div class="col center"><h1 class="logo title">ALLNB<span>R</span>G</h1></div>
-    </div>
-
-    <div class="row bottom">
-        <div class="col left"><a class="primary navigation" href="#">social</a></div>
-    </div>
-
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script>
-        (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <!-- Your customer chat code -->
-    <div class="fb-customerchat" page_id="821466371221081" theme_color="#111111"></div>
-
-    <div class="scroll"></div>
 </body>
 </html>
