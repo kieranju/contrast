@@ -10,10 +10,6 @@
             background-color: #111111;
             overflow: hidden;
         }
-        .scroll {
-            overflow: auto;
-            height: 100%;
-        }
 
         h1, h2, h3, h4, h5, a, p {
             margin: 0;
@@ -52,6 +48,13 @@
             font-weight: 400;
         }
 
+        .center {
+            height: 100%;
+            display: flex;
+            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+        }
         .logo {
             letter-spacing: 0.05em;
             user-select: none;
@@ -61,66 +64,29 @@
         .logo span {
             letter-spacing: 0.02em;
         }
-
-        .navigation {
-            user-select: none;
-            -webkit-user-select: none;
-            line-height: 1;
-            padding-left: 3vw;
-            padding-right: 3vw;
-        }
-
-        .row {
-            display: flex;
-            height: 33.33%;
-        }
-        .row.top { align-items: flex-start; }
-        .row.center { align-items: center; }
-        .row.bottom { align-items: flex-end; }
-
-        .col {
-            flex-grow: 1;
-            flex-shrink: 1;
-            padding-top: 2.5vw;
-            padding-bottom: 2.5vw;
-        }
-        .col.left { text-align: left; }
-        .col.center { text-align: center; }
-        .col.right { text-align: right; }
     </style>
 </head>
 <body>
+    <!-- music, shows, social -->
 
-    <div class="scroll">
-        
-        <div class="row top">
-            <div class="col left"><a class="primary navigation" href="#">music</a></div>
-            <div class="col right"><a class="primary navigation" href="#">shows</a></div>
-        </div>
-
-        <div class="row center">
-            <div class="col center"><h1 class="logo title">ALLNB<span>R</span>G</h1></div>
-        </div>
-
-        <div class="row bottom">
-            <div class="col left"><a class="primary navigation" href="#">social</a></div>
-        </div>
-
-        <!-- Load Facebook SDK for JavaScript -->
-        <div id="fb-root"></div>
-        <script>
-            (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-            fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-
-        <!-- Your customer chat code -->
-        <div class="fb-customerchat" page_id="821466371221081" theme_color="#111111"></div>
-
+    <div class="center">
+        <h1 class="logo title">ALLNB<span>R</span>G</h1>
     </div>
+
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat" page_id="821466371221081" theme_color="#111111"></div>
+
 </body>
 </html>
