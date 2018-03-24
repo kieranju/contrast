@@ -64,11 +64,36 @@
         .logo span {
             letter-spacing: 0.02em;
         }
+
+        .circle {
+            box-sizing: border-box;
+            position: absolute;
+            top: 34px;
+            left: 34px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .circle::after {
+            display: block;
+            content: '+';
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 auto;
+            color: black;
+            position: relative;
+            top: calc(50% - 1px);
+            transform: translateY(-50%);
+        }
     </style>
 </head>
 <body>
     <!-- music, shows, social -->
 
+    <div class="circle"></div>
+    
     <div class="center">
         <h1 class="logo title">ALLNB<span>R</span>G</h1>
     </div>
