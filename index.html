@@ -1,15 +1,39 @@
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <style>
+        :root {
+            /* easing curves */
+            --ease-out: cubic-bezier(0.36, 0.42, 0.13, 1);
+        }
         html, body {
             height: 100%;
             margin: 0;
             font-family: Interface, sans-serif;
             font-size: 18px;
-            background-color: #111111;
+
             overflow: hidden;
         }
+
+        .content {
+            clip-path: inset(0 0 0 0);
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .day {
+            color: #111111;
+            background-color: #fafafa;
+        }
+        .night {
+            color: #fafafa;
+            background-color: #111111;
+        }
+
+        /* TYPE */
 
         h1, h2, h3, h4, h5, a, p {
             margin: 0;
@@ -18,9 +42,13 @@
             font-style: normal;
             text-decoration: none;
             font-size: 1em;
+        }
+        .day a {
+            color: #111111;
+        }
+        .night a {
             color: #fafafa;
         }
-
         .title {
             font-size: 6.854em;
             font-size: 9.625vw;
@@ -31,9 +59,9 @@
             font-weight: 500;
         }
         .primary {
-            font-size: 2.618em;
+            font-size: 3em;
             font-size: 3.65vw;
-            font-weight: 500;
+            font-weight: 600;
         }
         .secondary {
             font-size: 1.618em;
@@ -48,6 +76,18 @@
             font-weight: 400;
         }
 
+        .logo {
+            letter-spacing: 0.05em;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        .logo .space {
+            letter-spacing: 0.02em;
+        }
+
+        /* POSITIONING */
+
         .center {
             height: 100%;
             display: flex;
@@ -55,49 +95,163 @@
             flex-direction: column;
             justify-content: center;
         }
-        .logo {
-            letter-spacing: 0.05em;
-            user-select: none;
-            -webkit-user-select: none;
-            cursor: default;
+
+        /* ETC */
+
+        .button {
+            box-sizing: border-box;
+            position: fixed;
+            top: 26px;
+            left: 40px;
+            width: 32px;
+            height: 48px;
+            cursor: pointer;
+            transform: rotate(90deg);
+            z-index: 1;
+            transition: transform 0.45s;
         }
-        .logo span {
-            letter-spacing: 0.02em;
+        .button span {
+            display: block;
+            content: '';
+            position: absolute;
+            width: 4px;
+            top: 6px;
+            right: 0;
+            bottom: 6px;
+            left: 0;
+            margin: 0 auto;
+            border-radius: 2px;
+            transition: transform 0.45s, opacity 0.45s, top 0.45s var(--ease-out);
+        }
+        .button span:nth-child(1) {
+            transform: translateX(-8px);
+        }
+        .button span:nth-child(2) {
+            transform: translateX(0px);
+        }
+        .button span:nth-child(3) {
+            transform: translateX(8px);
+            top: 18px;
+        }
+        .night .button span {
+            background-color: #fafafa;
+        }
+        .day .button span {
+            background-color: #111111;
         }
 
-        .circle {
-            box-sizing: border-box;
+        .active .button {
+            transform: rotate(90deg);
+        }
+        .active .button span:nth-child(1) {
+            transform: translateX(0) rotate(45deg);
+        }
+        .active .button span:nth-child(2) {
+            transform: translateX(0) rotate(-45deg);   
+        }
+        .active .button span:nth-child(3) {
+            transform: translateX(0) rotate(-45deg) scale(1);
+            opacity: 0;
+        }
+
+        .night {
+            z-index: 1;
+            transition: clip-path 0.6s var(--ease-out);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, -100% 100%);
+        }
+        .active .night {
+            clip-path: polygon(200% 0, 100% 0, 100% 100%, 100% 100%);
+        }
+        .day {
+            z-index: 0;
+        }
+        .day .logo {
             position: absolute;
-            top: 34px;
-            left: 34px;
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
+            left: 0;
+            right: 0;
         }
-        .circle::after {
-            display: block;
-            content: '+';
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            margin: 0 auto;
-            color: black;
-            position: relative;
-            top: calc(50% - 1px);
-            transform: translateY(-50%);
+        .day .navigation {
+            z-index: 1;
+            opacity: 0;
         }
+        .active .day .logo {
+        }
+        .active .day .navigation {
+        }
+
+        .day .logo span {
+            display: inline-block;
+            transition: opacity 0s 0.45s;
+        }
+        .active .day .logo span:nth-child(1) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.05s;
+        }
+        .active .day .logo span:nth-child(2) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.075s;
+        }
+        .active .day .logo span:nth-child(3) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.1s;
+        }
+        .active .day .logo span:nth-child(4) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.125s;
+        }
+        .active .day .logo span:nth-child(5) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.15s;
+        }
+        .active .day .logo span:nth-child(6) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.175s;
+        }
+        .active .day .logo span:nth-child(7) { 
+            opacity: 0;
+            transition: opacity 0.45s 0.2s;
+        }
+
     </style>
 </head>
 <body>
     <!-- music, shows, social -->
 
-    <div class="circle"></div>
-    
-    <div class="center">
-        <h1 class="logo title">ALLNB<span>R</span>G</h1>
-    </div>
+    <div class="wrapper">
 
+        <div class="content day">
+            <div class="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="center">
+                <h1 class="logo title">
+                    <span>A</span><span>L</span><span>L</span><span>N</span><span>B</span><span class="space">R</span><span>G</span>
+                </h1>
+                <div class="navigation">
+                    <a class="primary" href="#">test1</a>
+                    <a class="primary" href="#">test2</a>
+                    <a class="primary" href="#">test3</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content night">
+            <div class="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="center">
+                <h1 class="logo title">
+                    <span>A</span><span>L</span><span>L</span><span>N</span><span>B</span><span class="space">R</span><span>G</span>
+                </h1>
+            </div>
+        </div>
+
+    </div>
+	
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
     <script>
@@ -113,5 +267,16 @@
     <!-- Your customer chat code -->
     <div class="fb-customerchat" page_id="821466371221081" theme_color="#111111"></div>
 
+    <script>
+        var triggers = document.getElementsByClassName('button');
+        var target = document.getElementsByClassName('wrapper')[0];
+        var action = 'active';
+
+        for (var i = 0; i < triggers.length; i++) {
+            triggers[i].addEventListener('click', function () {
+                target.classList.toggle(action);
+            });
+        }
+    </script>
 </body>
 </html>
