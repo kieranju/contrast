@@ -1,35 +1,49 @@
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <style>
         :root {
-            /* easing curves */
-            --ease-out: cubic-bezier(0.36, 0.42, 0.13, 1);
+            --ease-out: cubic-bezier(0.2,0.2,0.13,1);
+            --colour-positive: #fafafa;
+            --colour-negative: #111111;
+            --icon-size: 36px;
         }
+
         html, body {
             height: 100%;
             margin: 0;
             font-family: Interface, sans-serif;
             font-size: 18px;
-
             overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .content {
-            position: fixed;
+            position: absolute;
             top: 0;
             right: 0;
             bottom: 0;
             left: 0;
         }
-        .day {
-            color: #111111;
-            background-color: #fafafa;
-        }
+
         .night {
-            color: #fafafa;
-            background-color: #111111;
+            z-index: 1;
+            color: var(--colour-positive, #fff);
+            background-color: var(--color-negative, #000);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, -100% 100%);
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, -100% 100%);
+            transition: clip-path 0.6s var(--ease-out), -webkit-clip-path 0.6s var(--ease-out);
+        }
+        .invert .night {
+            clip-path: polygon(200% 0, 100% 0, 100% 100%, 100% 100%);
+            -webkit-clip-path: polygon(200% 0, 100% 0, 100% 100%, 100% 100%);
+        }
+
+        .day {
+            z-index: 0;
+            color: var(--color-negative, #000);;
+            background-color: var(--colour-positive, #fff);;
         }
 
         /* TYPE */
@@ -43,10 +57,10 @@
             font-size: 1em;
         }
         .day a {
-            color: #111111;
+            color: var(--colour-negative, #000);
         }
         .night a {
-            color: #fafafa;
+            color: var(--colour-positive, #fff);
         }
         .title {
             font-size: 6.854em;
@@ -75,14 +89,9 @@
             font-weight: 400;
         }
 
-        .logo {
+        .focus {
             letter-spacing: 0.05em;
-            user-select: none;
-            -webkit-user-select: none;
             cursor: default;
-        }
-        .logo .space {
-            letter-spacing: 0.02em;
         }
 
         /* POSITIONING */
@@ -95,183 +104,55 @@
             justify-content: center;
         }
 
-        /* ETC */
+        /* TOGGLE */
 
         .button {
-            box-sizing: border-box;
-            position: fixed;
-            top: 26px;
-            left: 40px;
-            width: 32px;
-            height: 48px;
-            cursor: pointer;
-            transform: rotate(90deg);
-            z-index: 1;
-            transition: transform 0.45s;
-        }
-        .button span {
-            display: block;
-            content: '';
             position: absolute;
-            width: 4px;
-            top: 6px;
-            right: 0;
-            bottom: 6px;
-            left: 0;
-            margin: 0 auto;
-            border-radius: 2px;
-            transition: transform 0.45s, opacity 0.45s, top 0.45s var(--ease-out);
-        }
-        .button span:nth-child(1) {
-            transform: translateX(-8px);
-        }
-        .button span:nth-child(2) {
-            transform: translateX(0px);
-        }
-        .button span:nth-child(3) {
-            transform: translateX(8px);
-            top: 18px;
-        }
-        .night .button span {
-            background-color: #fafafa;
-        }
-        .day .button span {
-            background-color: #111111;
-        }
-
-        .active .button {
-            transform: rotate(90deg);
-        }
-        .active .button span:nth-child(1) {
-            transform: translateX(0) rotate(45deg);
-        }
-        .active .button span:nth-child(2) {
-            transform: translateX(0) rotate(-45deg);   
-        }
-        .active .button span:nth-child(3) {
-            transform: translateX(0) rotate(-45deg) scale(1);
-            opacity: 0;
-        }
-
-        .night {
             z-index: 1;
-            transition: clip-path 0.6s var(--ease-out), -webkit-clip-path 0.6s var(--ease-out);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, -100% 100%);
-            -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, -100% 100%);
+            top: var(--icon-size, 36px);
+            left: var(--icon-size, 36px);
+            width: var(--icon-size, 36px);
+            height: var(--icon-size, 36px);
+            cursor: pointer;
         }
-        .active .night {
-            clip-path: polygon(200% 0, 100% 0, 100% 100%, 100% 100%);
-            -webkit-clip-path: polygon(200% 0, 100% 0, 100% 100%, 100% 100%);
+        .button i {
+            display: block;
+            width: var(--icon-size, 36px);
+            height: var(--icon-size, 36px);
+            border-radius: 50%;
         }
-        .day {
-            z-index: 0;
+        
+        .night .button i {
+            position: relative;
+            top: calc(var(--icon-size, 36px) / 4 * -1);
+            left: calc(var(--icon-size, 36px) / 4 * -1);
+            box-shadow: calc(var(--icon-size, 36px) / 4) calc(var(--icon-size, 36px) / 4) 0 0 var(--colour-positive, #fff);
         }
-        .day .logo {
-            /*position: absolute;*/
-            left: 0;
-            right: 0;
+        .day .button i {
+            background-color: var(--colour-negative, #000);
         }
-        .day .navigation {
-            z-index: 1;
-            opacity: 0;
-        }
-
-        .day .logo span {
-            display: inline-block;
-            transition: opacity 0s 0.45s;
-        }
-        .active .day .logo span:nth-child(1) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.05s;
-        }
-        .active .day .logo span:nth-child(2) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.075s;
-        }
-        .active .day .logo span:nth-child(3) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.1s;
-        }
-        .active .day .logo span:nth-child(4) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.125s;
-        }
-        .active .day .logo span:nth-child(5) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.15s;
-        }
-        .active .day .logo span:nth-child(6) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.175s;
-        }
-        .active .day .logo span:nth-child(7) { 
-            opacity: 0;
-            transition: opacity 0.45s 0.2s;
-        }
-
     </style>
 </head>
 <body>
-    <!-- music, shows, social -->
-
-    <!--             
-    <div class="navigation">
-        <a class="primary" href="#">test1</a>
-        <a class="primary" href="#">test2</a>
-        <a class="primary" href="#">test3</a>
-    </div> 
-    -->
-
     <div class="wrapper">
-
         <div class="content day">
-            <div class="button">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="button"><i></i></div>
             <div class="center">
-                <h1 class="logo title">
-                    <span>A</span><span>L</span><span>L</span><span>N</span><span>B</span><span class="space">R</span><span>G</span>
-                </h1>
-
+                <h1 class="focus title">CONTRAST</h1>
             </div>
         </div>
-
         <div class="content night">
-            <div class="button">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="button"><i></i></div>
             <div class="center">
-                <h1 class="logo title">
-                    <span>A</span><span>L</span><span>L</span><span>N</span><span>B</span><span class="space">R</span><span>G</span>
-                </h1>
+                <h1 class="focus title">CONTRAST</h1>
             </div>
         </div>
-
     </div>
-	
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script>
-        (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <!-- Your customer chat code -->
-    <div class="fb-customerchat" page_id="821466371221081" theme_color="#111111"></div>
 
     <script>
         var triggers = document.getElementsByClassName('button');
         var target = document.getElementsByClassName('wrapper')[0];
-        var action = 'active';
+        var action = 'invert';
 
         for (var i = 0; i < triggers.length; i++) {
             triggers[i].addEventListener('click', function () {
